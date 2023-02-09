@@ -1,15 +1,13 @@
 library routemaster;
 
-export 'src/parser.dart';
-export 'src/pages/guard.dart';
-export 'src/pages/transition_page.dart';
-
 import 'dart:async';
 import 'dart:math';
+
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
+
 import 'src/not_found_page.dart';
 import 'src/pages/guard.dart';
 import 'src/pages/transition_page.dart';
@@ -17,12 +15,16 @@ import 'src/path_parser.dart';
 import 'src/system_nav.dart';
 import 'src/trie_router/trie_router.dart';
 
+export 'src/pages/guard.dart';
+export 'src/pages/transition_page.dart';
+export 'src/parser.dart';
+
+part 'src/observers.dart';
+part 'src/pages/flow_page.dart';
 part 'src/pages/page_stack.dart';
-part 'src/pages/tab_pages.dart';
 part 'src/pages/pages.dart';
 part 'src/pages/stack_page.dart';
-part 'src/pages/flow_page.dart';
-part 'src/observers.dart';
+part 'src/pages/tab_pages.dart';
 part 'src/route_data.dart';
 part 'src/route_history.dart';
 part 'src/widget_navigator.dart';
@@ -1251,22 +1253,22 @@ class _RoutemasterStateTrackerState extends State<_RoutemasterStateTracker> {
   void didUpdateWidget(_RoutemasterStateTracker oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    final oldDelegate = oldWidget.delegate;
-    final newDelegate = widget.delegate;
-
-    // Check if delegate has been recreated
-    if (oldDelegate != newDelegate) {
-      // Update new delegate's state from old delegate's state
-      newDelegate._state = oldDelegate._state;
-      newDelegate._state.delegate = newDelegate;
-
-      newDelegate._rebuildRouter(context);
-
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
-        // Dispose after this frame to allow child widgets to unsubscribe
-        oldDelegate.dispose();
-      });
-    }
+    // final oldDelegate = oldWidget.delegate;
+    // final newDelegate = widget.delegate;
+    //
+    // // Check if delegate has been recreated
+    // if (oldDelegate != newDelegate) {
+    //   // Update new delegate's state from old delegate's state
+    //   newDelegate._state = oldDelegate._state;
+    //   newDelegate._state.delegate = newDelegate;
+    //
+    //   newDelegate._rebuildRouter(context);
+    //
+    //   WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //     // Dispose after this frame to allow child widgets to unsubscribe
+    //     oldDelegate.dispose();
+    //   });
+    // }
   }
 }
 
