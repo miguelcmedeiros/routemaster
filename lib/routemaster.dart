@@ -1253,22 +1253,22 @@ class _RoutemasterStateTrackerState extends State<_RoutemasterStateTracker> {
   void didUpdateWidget(_RoutemasterStateTracker oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // final oldDelegate = oldWidget.delegate;
-    // final newDelegate = widget.delegate;
-    //
-    // // Check if delegate has been recreated
-    // if (oldDelegate != newDelegate) {
-    //   // Update new delegate's state from old delegate's state
-    //   newDelegate._state = oldDelegate._state;
-    //   newDelegate._state.delegate = newDelegate;
-    //
-    //   newDelegate._rebuildRouter(context);
-    //
-    //   WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //     // Dispose after this frame to allow child widgets to unsubscribe
-    //     oldDelegate.dispose();
-    //   });
-    // }
+    final oldDelegate = oldWidget.delegate;
+    final newDelegate = widget.delegate;
+
+    // Check if delegate has been recreated
+    if (oldDelegate._state != newDelegate._state) {
+      // Update new delegate's state from old delegate's state
+      newDelegate._state = oldDelegate._state;
+      newDelegate._state.delegate = newDelegate;
+
+      newDelegate._rebuildRouter(context);
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Dispose after this frame to allow child widgets to unsubscribe
+        oldDelegate.dispose();
+      });
+    }
   }
 }
 
